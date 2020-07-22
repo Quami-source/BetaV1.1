@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 const {width, height} = Dimensions.get('screen');
-export default function Testimony() {
+export default function PrayerRequest() {
   const [text, setText] = React.useState('');
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -19,12 +19,10 @@ export default function Testimony() {
       <View
         style={{
           flex: 0.5,
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start',
-          marginRight: 250,
-          marginTop: 20,
+          marginRight:200,
+          marginTop:20,
         }}>
-        <Text style={{fontSize: 27, fontWeight: '700'}}>Testimony</Text>
+        <Text style={{fontSize: 27, fontWeight: '700'}}>Prayer Request</Text>
       </View>
       <View style={{flex: 2}}>
         <View
@@ -40,11 +38,11 @@ export default function Testimony() {
             multiline={true}
             numberOfLines={100}
             onChange={(text) => setText(text)}
-            placeholder="Type your testimony here"
+            placeholder="Type your prayer requests here"
             textAlignVertical = 'top'
           />
           <View style = {{marginTop:10}}>
-          <Text>Help inspire someone</Text>
+          <Text>Your privacy is protected</Text>
           </View>
         </View>
       </View>
@@ -52,7 +50,7 @@ export default function Testimony() {
         <TouchableHighlight
             onPress = {
                 () => {
-                    Alert.alert('Testimony', 'Testimony sent successfuly')
+                    Alert.alert('Testimony', 'Prayer request sent successfuly')
                 }
             }
           style={{

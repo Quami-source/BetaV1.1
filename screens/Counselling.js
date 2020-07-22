@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 
 const {width, height} = Dimensions.get('screen');
-export default function Testimony() {
-  const [text, setText] = React.useState('');
+
+const Counselling = () => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <StatusBar backgroundColor="#eee" />
@@ -24,11 +24,10 @@ export default function Testimony() {
           marginRight: 250,
           marginTop: 20,
         }}>
-        <Text style={{fontSize: 27, fontWeight: '700'}}>Testimony</Text>
+        <Text style={{fontSize: 27, fontWeight: '700'}}>Counselling</Text>
       </View>
       <View style={{flex: 2}}>
-        <View
-          style={{
+        <View style={{
             width: width / 1.05,
             height: height / 3,
             borderRadius: 10,
@@ -40,21 +39,17 @@ export default function Testimony() {
             multiline={true}
             numberOfLines={100}
             onChange={(text) => setText(text)}
-            placeholder="Type your testimony here"
+            placeholder="Type a summary of the discussion here"
             textAlignVertical = 'top'
           />
-          <View style = {{marginTop:10}}>
-          <Text>Help inspire someone</Text>
-          </View>
+          <Text style={{marginTop: 10}}>Make it as brief as possible</Text>
         </View>
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-start'}}>
+      <View style={{flex: 1}}>
         <TouchableHighlight
-            onPress = {
-                () => {
-                    Alert.alert('Testimony', 'Testimony sent successfuly')
-                }
-            }
+          onPress={() => {
+            Alert.alert('Testimony', 'Testimony sent successfuly');
+          }}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -64,10 +59,12 @@ export default function Testimony() {
             height: 50,
           }}>
           <Text style={{color: '#fff', fontSize: 18, fontWeight: '500'}}>
-            SEND
+            Send request
           </Text>
         </TouchableHighlight>
       </View>
     </View>
   );
-}
+};
+
+export default Counselling;

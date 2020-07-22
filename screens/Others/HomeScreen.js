@@ -2,7 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
-  Button,
+  Alert,
   StyleSheet,
   StatusBar,
   ScrollView,
@@ -11,12 +11,30 @@ import {
   ImageBackground,
 } from 'react-native';
 import {BoxShadow} from 'react-native-shadow';
+//import {Dropdown} from 'react-native-material-dropdown';
 import {useTheme} from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 //import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {BottonContext} from '../../components/BottonContex';
+//import { MenuItem } from 'react-native-paper/lib/typescript/src/components/Menu/MenuItem';
+
 const {width} = Dimensions.get('screen');
 const HomeScreen = ({navigation}) => {
+  /* let menuItems = [
+    {value:'See testimonies'},
+    {value:'My testimonies'}
+  ]
+  const Menu = () => {
+    return(
+      <Dropdown
+      data = {menuItems}
+      />
+    )
+  } */
+
+  const { toggleBtnVisibility } = React.useContext(BottonContext)
+
   const shadowOpt = {
     width: width / 2.15,
     height: 160,
@@ -47,49 +65,56 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.textView}>
           <Animatable.Text
             animation="fadeIn"
-            delay={400}
+            delay={300}
             style={styles.text_header}>
             Hello there,
           </Animatable.Text>
           <Animatable.Text
             animation="fadeIn"
-            delay={600}
+            delay={400}
             style={styles.text_header}>
             Welcome to GEM Diaspora
           </Animatable.Text>
           <Animatable.Text
             animation="fadeIn"
-            delay={800}
+            delay={500}
             style={styles.sub_Text}>
-            A campus branch in University of Ghana
+            A campus branch in University of Ghana Legon
           </Animatable.Text>
         </View>
         <View>
           <View style={styles.parentView}>
             <View style={{flex: 1, justifyContent: 'space-between'}}>
               <BoxShadow setting={shadowOpt}>
-                <TouchableOpacity style={styles.btn4} onPress={()=>navigation.navigate('Testimony')}>
-                  <View style={{flexDirection: 'row', flex: 1, margin: 10}}>
-                    <View style={{flex: 1}}>
-                    <Icon name="plus-circle" size={26} color="#ccc" />
+                <View style={styles.btn4} >
+                  <View style={{flexDirection: 'row', flex: 0.5, margin: 10}}>
+                    <View style={{alignItems:'flex-start',paddingRight:100}}>
+                    <Icon name="plus-circle" size={26} color="#ccc" onPress = {()=>Alert.alert('Add testimony','Navigate to add testimony screen')} />
                     </View>
-                    <View style={{flex: 1, alignItems: 'flex-end'}}>
-                      <Icon name="dots-horizontal" size={26} color="#ccc" />
+                    <View style={{ alignItems: 'flex-end'}}>
+                      <Icon name="dots-horizontal" size={26} color="#ccc" onPress = {()=>MenuItem }/>
                     </View>
                   </View>
-                  <View
-                    style={{flex: 1, justifyContent: 'flex-end', margin: 20}}>
+                  <TouchableOpacity
+                    style={{flex: 2, justifyContent: 'center',alignItems:'center'}} onPress={()=>
+                      {
+                        navigation.navigate('Testimony') 
+                      
+                    }}>
                     <Text style={{fontSize: 18, fontWeight: '700'}}>
                       Have a testimony?
                     </Text>
-                    <Text style={{fontWeight: '500', }}>
+                    <Text style={{fontWeight: '500',textAlign:'center' }}>
                         Encourage someone by sending it to us
                     </Text>
-                  </View>
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
               </BoxShadow>
               <BoxShadow setting={shadowOpt}>
-                <TouchableOpacity style={styles.btn3}>
+                <TouchableOpacity style={styles.btn3} onPress = {()=>{
+                  //toggleBtnVisibility()
+                  navigation.navigate('Counselling')
+                }} >
                   <View style={{flexDirection: 'row', flex: 1, margin: 10}}>
                     <Icon
                           name="briefcase-plus"
@@ -112,7 +137,7 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
               </BoxShadow>
               <BoxShadow setting={shadowOpt}>
-                <TouchableOpacity style={styles.btn1}>
+                <TouchableOpacity style={styles.btn1} onPress = {()=> navigation.navigate('Prayer')} >
                   <View style={{flexDirection: 'row', flex: 1, margin: 10}}>
                     <View style={{flex: 1}}>
                     <Icon name="plus-circle" size={26} color="#ccc" />
@@ -214,17 +239,18 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    backgroundColor:'#eee',
     justifyContent: 'center',
   },
   textView: {
     flex: 1,
     marginHorizontal: 20,
-    marginBottom: 20,
+    marginVertical : 20,
+    marginBottom: 40,
   },
   text_header: {
-    fontWeight: '700',
-    fontSize: 30,
+    fontWeight: '600',
+    fontSize: 28,
   },
   sub_TextLight: {
     fontWeight: '300',

@@ -10,7 +10,7 @@ import {
     StatusBar,
     Alert
 } from 'react-native';
-import {Mutation} from 'react-apollo';
+import {Mutation,useMutation} from 'react-apollo';
 import gql from 'graphql-tag';
 import * as Animatable from 'react-native-animatable';
 //import LinearGradient from 'react-native-linear-gradient';
@@ -31,7 +31,7 @@ const SIGNIN_MUTATION = gql`
 `;
 
 const SignInScreen = ({navigation}) => {
-
+    
     const [userData, setData] = React.useState({
         name: '',
         password: '',
@@ -41,11 +41,30 @@ const SignInScreen = ({navigation}) => {
         isValidPassword: true,
     });
 
+    const [mutate] = useMutation(SIGNIN_MUTATION);
+    const [error,setError] = React.useState()
+    const [data, setdata] = React.useState()
+    
+    const handlePress = async ()=>{
+        try{
+            const {data} = await mutate(userData.name,userData.password)
+            signIn(data)
+            console.log(data)
+        }
+        catch(e){
+            setError(e)
+            console.log('Error in fetching data ' + e)
+        }
+    }
+
     //const [textColor, setTextColor] = React.useState({textColor : '#fff'})
 
     const { colors } = useTheme();
 
     const { signIn } = React.useContext(AuthContext);
+
+
+
 
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
@@ -215,26 +234,26 @@ const SignInScreen = ({navigation}) => {
             </TouchableOpacity>
             <View style={styles.button}>
                 <Mutation
+                    
                     mutation={SIGNIN_MUTATION}
                     variables={{username,password}}
-                    onCompleted={(data) => {
-                        signIn(data)
-                        loginHandle( userData.name, userData.password )
-                    }}
                 >
                     {
-                        mutation => (
+                        ({loading}) => (
                             <TouchableHighlight
-                                underlayColor="#206cb7"
-                                    style={styles.btn1}
-                                    onPress={mutation}
-                                >
-                                
-                                <Text style={[styles.textSign, {
-                                        color:'#fff'
-                                    }]}>Sign In</Text>
-                                
-                                </TouchableHighlight>
+                                style={styles.btn1}
+                                onPress={
+                                    () => {
+                                        if(loading){
+                                            console.log('Loading...')
+                                        }
+
+                                        handlePress()
+                                    }
+                                }
+                            >
+                                <Text style={[styles.textSign, {color:'#fff'}]}>Login</Text>
+                            </TouchableHighlight>
                         )
                     }
                 </Mutation>

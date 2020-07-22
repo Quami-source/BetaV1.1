@@ -133,7 +133,7 @@ const App = () => {
     setTimeout(async () => {
       //setIsLoading(false);
       //setUserToken('fgkj');
-      let userToken =null;
+      let userToken = "usertoken";
       try {
         userToken = await AsyncStorage.getItem(AUTH_TOKEN);
       } catch (e) {
@@ -155,7 +155,7 @@ const App = () => {
     <AuthContext.Provider value={authContext}>
       <ApolloProvider client={client}>
       <NavigationContainer>
-        {loginState.userToken != null ? (
+        {loginState.userToken == null ? (
           <Drawer.Navigator
             drawerContent={(props) => <DrawerContent {...props} />}>
             <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />

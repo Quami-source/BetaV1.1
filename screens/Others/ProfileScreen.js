@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet,StatusBar } from 'react-native';
 
 const ProfileScreen = () => {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor = "#858585" />
         <Text>Profile Screen</Text>
         <Button
           title="Click Here"

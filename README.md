@@ -10,3 +10,12 @@ It also enable church members to request councelling among others
 ## Sample
 
 ![alt text](https://github.com/Quami-source/BetaV1.1/blob/master/sample/1.png)
+
+
+![alt text](https://github.com/Quami-source/BetaV1.1/blob/master/sample/2.png)
+
+
+![alt text](https://github.com/Quami-source/BetaV1.1/blob/master/sample/3.png)
+
+
+![alt text](https://github.com/Quami-source/BetaV1.1/blob/master/sample/4.png)

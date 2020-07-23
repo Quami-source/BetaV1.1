@@ -8,7 +8,7 @@ import {DrawerContent} from './screens/DrawerContent';
 import MainTabScreen from './screens/Others/MainTabScreen';
 import SupportScreen from './screens/Others/SupportScreen';
 import SettingsScreen from './screens/Others/SettingsScreen';
-import BookmarkScreen from './screens/Others/BookmarkScreen';
+//import BookmarkScreen from './screens/Others/BookmarkScreen';
 
 import {AuthContext} from './components/context';
 
@@ -46,8 +46,8 @@ const client = new ApolloClient({
 const Drawer = createDrawerNavigator();
 
 const App = () => {
-  //const [isLoading, setIsLoading] = React.useState(true);
-  //const [userToken, setUserToken] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userToken, setUserToken] = React.useState(null);
 
   const state = {
     isLoading: true,
@@ -88,42 +88,49 @@ const App = () => {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async (data) => {
+      signIn:async () => {
+        setUserToken('token')
+        setIsLoading(false)
+        console.log(userToken)
         //const userToken = String(foundUser[0].userToken);
         //const userName = foundUser[0].username;
-        const {token} = data.login
+        
+       //const {token} = data.login
 
-        try {
+        /* try {
           await AsyncStorage.setItem(AUTH_TOKEN, token);
         } catch (e) {
           console.log(e);
-        }
-        console.log('user token: ', token);
+        } 
+
+        //setUserToken(token);
+    
         //console.log('user token: ', userToken);
-        dispatch({type:'LOGIN', token:token})
+        dispatch({type:'LOGIN', token:token}) */
       },
       signOut: async () => {
-        //setUserToken(null);
-        //setIsLoading(false);
-        try {
+        setUserToken(null);
+        setIsLoading(false);
+        /* try {
           await AsyncStorage.removeItem(AUTH_TOKEN);
         } catch (e) {
           console.log(e);
-        }
-        dispatch({type: 'LOGOUT'});
+        } 
+        dispatch({type: 'LOGOUT'}); */
       },
-      signUp: async (data) => {
-        //setUserToken('fgkj');
-        //setIsLoading(false);
-        const {token} = data.signUp
+      signUp: async () => {
+        let token = 'userToken'
+        setUserToken(token)
+        setIsLoading(false)
+        //const {token} = data.signUp
         //let userName = 1
-        try {
+       /*  try {
           await AsyncStorage.setItem(AUTH_TOKEN, token);
         } catch (e) {
           console.log(e);
-        }
+        } 
         console.log('user token: ', token);
-        dispatch({type: 'REGISTER', token: token});
+        dispatch({type: 'REGISTER', token: token}); */
       },
     }),
     [],
@@ -131,20 +138,20 @@ const App = () => {
 
   useEffect(() => {
     setTimeout(async () => {
-      //setIsLoading(false);
-      //setUserToken('fgkj');
-      let userToken = "usertoken";
-      try {
+      setIsLoading(false);
+      setUserToken(null);
+      let userToken = null;
+      /* try {
         userToken = await AsyncStorage.getItem(AUTH_TOKEN);
       } catch (e) {
         console.log(e);
-      }
+      } 
       //console.log('user token: ', userToken);
-      dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
+      dispatch({type: 'RETRIEVE_TOKEN', token: userToken}); */
     }, 600);
   }, []);
 
-  if (loginState.isLoading) {
+  if (isLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="#206cb7"/>
@@ -155,16 +162,16 @@ const App = () => {
     <AuthContext.Provider value={authContext}>
       <ApolloProvider client={client}>
       <NavigationContainer>
-        {loginState.userToken == null ? (
+        {userToken == null ? (
+          <RootStack/>
+        ) : (
           <Drawer.Navigator
             drawerContent={(props) => <DrawerContent {...props} />}>
             <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
             <Drawer.Screen name="SupportScreen" component={SupportScreen} />
             <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-            <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
+            
           </Drawer.Navigator>
-        ) : (
-          <RootStack />
         )}
       </NavigationContainer>
       </ApolloProvider>

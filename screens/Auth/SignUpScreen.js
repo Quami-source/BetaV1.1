@@ -2,7 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
-  Button,
+  Alert,
   TouchableOpacity,
   Dimensions,
   TouchableHighlight,
@@ -25,16 +25,14 @@ import {AuthContext} from '../../components/context';
 import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
 
-
 //graphql signup Mutation definition
-const SIGNUP_MUTATION = gql`
-  mutation SignUp_mutation($email:String!,$password:String!){
-    signup(email:$email,password:$password){
+/* const SIGNUP_MUTATION = gql`
+  mutation SignUp_mutation($email: String!, $password: String!) {
+    signup(email: $email, password: $password) {
       token
     }
   }
-
-`;
+`; */
 
 const SignUpScreen = ({navigation}) => {
   const {signUp} = React.useContext(AuthContext);
@@ -90,7 +88,18 @@ const SignUpScreen = ({navigation}) => {
       confirm_secureTextEntry: !userData.confirm_secureTextEntry,
     });
   };
-  const {password,username} = userData
+
+  const signUpHandle = () => {
+    if(userData.password != userData.confirm_password){
+      Alert.alert('Password','Passwords do not match!')
+      return;
+    }
+    if(userData.username == 'admin' && userData.confirm_password == 'rootadmin'){
+      navigation.goBack('LoginScreen')
+    }
+  }
+
+//const {password, username} = userData;
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#206cb7" barStyle="light-content" />
@@ -136,7 +145,7 @@ const SignUpScreen = ({navigation}) => {
           <View style={styles.action}>
             <TextInput
               placeholder="Enter a secure password"
-              secureTextEntry={data.secureTextEntry ? true : false}
+              secureTextEntry={userData.secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => handlePasswordChange(val)}
@@ -162,7 +171,7 @@ const SignUpScreen = ({navigation}) => {
           <View style={styles.action}>
             <TextInput
               placeholder="Confirm Your Password"
-              secureTextEntry={data.confirm_secureTextEntry ? true : false}
+              secureTextEntry={userData.confirm_secureTextEntry ? true : false}
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => handleConfirmPasswordChange(val)}
@@ -176,23 +185,12 @@ const SignUpScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={styles.button}>
-          <Mutation
-                mutation={SIGNUP_MUTATION}
-                variables={{username, password}}
-                onCompleted={
-                  (data) => signUp(data)
-                }
-              >
-            {
-              mutation => (
-                <TouchableHighlight
+            <TouchableHighlight
               underlayColor="#206cb7"
               style={styles.btn1}
               onPress={() => {
-                mutation
-                navigation.goBack('SignInScreen')
-                
-                }}>
+                signUpHandle();
+              }}>
               <Text
                 style={[
                   styles.textSign,
@@ -203,12 +201,9 @@ const SignUpScreen = ({navigation}) => {
                 Sign Up
               </Text>
             </TouchableHighlight>
-              )
-            }
-            </Mutation>
             <TouchableHighlight
               underlayColor="#206cb7"
-              onPress={() => navigation.goBack('SignInScreen')}
+              onPress={() => navigation.goBack('LoginScreen')}
               style={[
                 styles.signIn,
                 {

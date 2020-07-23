@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BottonContext} from '../../components/BottonContex';
 
 import HomeScreen from './HomeScreen';
-import DetailsScreen from './DetailsScreen';
+//import DetailsScreen from './DetailsScreen';
 import ExploreScreen from './ExploreScreen';
 import ProfileScreen from './ProfileScreen';
 import Testimony from '../Testimony';

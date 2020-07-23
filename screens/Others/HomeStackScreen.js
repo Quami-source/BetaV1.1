@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View, Text,Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createStackNavigator} from '@react-navigation/stack';
 import Feather from 'react-native-vector-icons/Feather';
@@ -36,7 +36,7 @@ const HomeStackScreen = ({navigation}) => {
           },
           headerRight: () => {
             return (
-              <TouchableOpacity style={{marginRight: 15}}>
+              <TouchableOpacity style={{marginRight: 15}} onPress = {()=>Alert.alert('Notification',"You have no notifictions yet")} >
                 <Icon name="bell" size={26} color="#206cb7" />
               </TouchableOpacity>
             );
